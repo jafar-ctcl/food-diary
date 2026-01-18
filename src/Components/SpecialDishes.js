@@ -46,15 +46,14 @@ function removeLocalItem(index){
 }
 
     let maxSpeacialDishes = 8;
-    let specialMenus = allMenus.map((menuItem,index)=>{
-     if(index < maxSpeacialDishes){
+    let specialMenus = allMenus.slice(0, maxSpeacialDishes).map((menuItem,index)=>{
             return (
               <CardDish 
+              key={menuItem.idMeal || index}
               menuItem={menuItem}
               showPopupHandler={showPopupHandler}
-           
                />
-     ) }
+     )
     })
   return (
 

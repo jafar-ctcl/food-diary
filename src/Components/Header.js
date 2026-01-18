@@ -1,10 +1,10 @@
 import React from 'react'
-import { NavLink,Link} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 function Header() {
   return (
     <div>
       <header className="flex flex-center flex-between">
-      <a className='logo'>Food Diary</a>
+      <NavLink to="/" className='logo'>Food Diary</NavLink>
       <nav>
         <ul className="flex">
             <li> 

@@ -1,19 +1,17 @@
-import React, { useContext, useState,useEffect } from 'react'
+import React, { useState,useEffect } from 'react'
 import Pagination from './Pagination'
 import Popup from './Popup'
 import CardDish from './CardDish'
-import { AllMenuContext } from './AllMenuContext'
+// AllMenuContext not needed here
 import { fetchCategories, fetchByCategory } from '../utils/api'
 //import { AllMenuContext } from './Menus'
 
 function FilterDishes(props) {
-  let allMenus = useContext(AllMenuContext)
- 
   let [menuCategory,setMenuCategory] = useState([])
    let [filteredDishes,setFilteredDishes] = useState([]) 
   let [activeDish,setActiveDish]=useState("Beef")
   let [currentPage,setCurrentPage] = useState(1)
-  let [itemsPerPage,setItemsPerPage] = useState(8)
+  const itemsPerPage = 8
   let [showPopup,setShowPopup] = useState(false)
   let [currentDish,setCurrentDish] = useState('')
 
@@ -47,7 +45,7 @@ function FilterDishes(props) {
   ))
 
 //lets show only single dishes
-let maxItem = 8
+// itemsPerPage is fixed to 8 per page
 
 //show dishes  on click
  async function showFilteredDishesHandler(category){
@@ -79,7 +77,7 @@ function closePopupHandler(){
   //Let shows the Category
   let allCategories = menuCategory.map((item)=>{
     return(
-      <li className={ item.strCategory == activeDish ? "active": ""} onClick={()=>{showFilteredDishesHandler(item.strCategory)}}>{item.strCategory}</li>
+      <li key={item.strCategory} className={ item.strCategory === activeDish ? "active": ""} onClick={()=>{showFilteredDishesHandler(item.strCategory)}}>{item.strCategory}</li>
     )
   })
    return (

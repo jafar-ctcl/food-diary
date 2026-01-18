@@ -11,7 +11,7 @@ function Popup({closePopupHandler,currentDish,addToCartHandler}) {
  const [error, setError] = useState(null)
  const cancelledRef = React.useRef(false)
 
- async function loadDetails(){
+ const loadDetails = React.useCallback(async ()=>{
    cancelledRef.current = false
    setLoading(true)
    setError(null)
@@ -36,13 +36,13 @@ function Popup({closePopupHandler,currentDish,addToCartHandler}) {
    }finally{
      if(!cancelledRef.current) setLoading(false)
    }
- }
+ },[currentDish, allMenus])
 
  useEffect(()=>{
    cancelledRef.current = false
    loadDetails()
    return ()=>{ cancelledRef.current = true }
- },[currentDish, allMenus])
+ },[loadDetails])
 
  if(loading) return (
    <div className='popup'>
@@ -53,6 +53,7 @@ function Popup({closePopupHandler,currentDish,addToCartHandler}) {
  return (
    <div className='popup'>
      <div className="popup-content">
+      {error && <div className="popup-error">Failed to load details. Please try again.</div>}
        {!details && <div className='popup-content-data'><p style={{color:'white'}}>No details available.</p><button onClick={closePopupHandler} className="popup-close">×</button></div>}
        {details && (
          <div className="popup-content-data">
